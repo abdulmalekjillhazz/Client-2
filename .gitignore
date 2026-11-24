@@ -1,0 +1,12 @@
+node_modules/
+/.next/
+/.next-stale-backup/
+/.next-*/
+next-env.d.ts
+yarn.lock
+.env
+.env.local
+.env.*.local
+server/data/db.json
+server/data/sessions.json
+server/uploads/
