@@ -40,7 +40,7 @@ const HeroSection = ({ locations = [], maxGuests = 1 }) => {
           </div>
         </div>
 
-        <form onSubmit={searchVillas} className="hero-search-form mx-auto mt-10 grid w-full max-w-[1020px] grid-cols-1 text-white sm:mt-12 sm:grid-cols-2 md:mt-16 lg:grid-cols-[1.2fr_1fr_1fr_.75fr_auto] lg:items-center">
+        <form onSubmit={searchVillas} className="hero-search-form mx-auto mt-10 grid w-full max-w-[1020px] grid-cols-1 text-white sm:mt-12 sm:grid-cols-2 md:mt-16 min-[1450px]:grid-cols-[1.2fr_1fr_1fr_.75fr_auto] min-[1450px]:items-center">
             <label className="hero-search-field flex min-h-14 min-w-0 items-center gap-3 rounded-full px-4 py-2.5 text-shadow-soft transition hover:-translate-y-0.5 focus-within:text-[#ffe1a3]" htmlFor="hero-place">
               <MapPin className="h-5 w-5 shrink-0 text-[#f0c56e] drop-shadow" aria-hidden="true" /><span className="grid min-w-0 gap-1"><span className="text-xs font-bold">Destination</span>
               <select id="hero-place" name="place" defaultValue="" className="hero-search-control h-6 min-w-0 bg-transparent text-sm text-white/90 outline-none">
@@ -60,7 +60,7 @@ const HeroSection = ({ locations = [], maxGuests = 1 }) => {
               <Users className="h-5 w-5 shrink-0 text-[#f0c56e] drop-shadow" aria-hidden="true" /><span className="grid min-w-0 gap-1"><span className="text-xs font-bold">Guests</span>
               <input id="hero-guests" name="guests" type="number" min="1" max={maxGuests} defaultValue="2" required className="hero-search-control h-6 w-20 min-w-0 bg-transparent text-sm text-white/90 outline-none" /></span>
             </label>
-            <button type="submit" className="hero-search-submit col-span-full inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#073b2e] px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 lg:col-span-1 lg:w-auto">
+            <button type="submit" className="hero-search-submit col-span-full inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#073b2e] px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 min-[1450px]:col-span-1 min-[1450px]:w-auto">
               <Search className="h-4 w-4" /> Find a stay
             </button>
         </form>

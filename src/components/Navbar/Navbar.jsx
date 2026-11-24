@@ -44,7 +44,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const keepDesktopNavigationVisible = () => {
-      if (window.innerWidth >= 768) setIsOpen(true);
+      if (window.innerWidth >= 1100) setIsOpen(true);
     };
     window.addEventListener("resize", keepDesktopNavigationVisible);
     return () => window.removeEventListener("resize", keepDesktopNavigationVisible);
@@ -61,7 +61,7 @@ export default function Navbar() {
   };
 
   const closeMenu = () => {
-    if (window.innerWidth >= 768) return;
+    if (window.innerWidth >= 1100) return;
     setIsOpen(false);
   };
 
@@ -71,12 +71,12 @@ export default function Navbar() {
         <>
           <button
             type="button"
-            className="royal-drawer__backdrop pointer-events-auto absolute inset-0 h-full w-full cursor-default"
+            className="royal-drawer__backdrop pointer-events-auto absolute inset-0 h-full w-full cursor-default min-[1100px]:hidden"
             aria-label="Close navigation menu"
             onClick={closeMenu}
           />
-          <aside className="royal-drawer pointer-events-auto absolute inset-y-0 right-0 flex flex-col" role="dialog" aria-modal="true" aria-label="RoyalCity navigation menu">
-            <button type="button" onClick={closeMenu} className="royal-drawer__close absolute right-5 top-5 z-20 inline-flex h-14 w-14 items-center justify-center rounded-2xl text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#65c9ff] md:hidden" aria-label="Close menu">
+          <aside className="royal-drawer pointer-events-auto absolute inset-y-0 right-0 flex flex-col" aria-label="RoyalCity navigation menu">
+            <button type="button" onClick={closeMenu} className="royal-drawer__close absolute right-5 top-5 z-20 inline-flex h-14 w-14 items-center justify-center rounded-2xl text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#65c9ff] min-[1100px]:hidden" aria-label="Close menu">
               <X className="h-8 w-8" aria-hidden="true" />
             </button>
 
@@ -112,7 +112,7 @@ export default function Navbar() {
                     <span className="royal-drawer__theme-track">{isDark ? <Moon /> : <Sun />}</span>
                     <span className={`royal-drawer__theme-thumb ${isDark ? "royal-drawer__theme-thumb--dark" : "royal-drawer__theme-thumb--light"}`}>{isDark ? <Sun /> : <Moon />}</span>
                   </span>
-                  <span className="min-w-0 flex-1 font-display text-[1.35rem] font-bold tracking-[-.025em] sm:text-[1.65rem]">{isDark ? "Dark Mode" : "Light Mode"}</span>
+                  <span className="min-w-0 flex-1 whitespace-nowrap font-display text-[1.15rem] font-bold tracking-[-.025em] sm:text-[1.3rem]">{isDark ? "Dark Mode" : "Light Mode"}</span>
                   <ChevronRight className="h-8 w-8 shrink-0" strokeWidth={2.3} aria-hidden="true" />
                 </button>
 
@@ -158,7 +158,7 @@ export default function Navbar() {
           </aside>
         </>
       ) : (
-        <button type="button" onClick={() => setIsOpen(true)} className="royal-drawer__launcher pointer-events-auto absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-xl text-white sm:right-5 sm:top-5 sm:h-14 sm:w-14 sm:rounded-2xl md:hidden" aria-label="Open navigation menu" aria-expanded="false">
+        <button type="button" onClick={() => setIsOpen(true)} className="royal-drawer__launcher pointer-events-auto absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-xl text-white sm:right-5 sm:top-5 sm:h-14 sm:w-14 sm:rounded-2xl min-[1100px]:hidden" aria-label="Open navigation menu" aria-expanded="false">
           <Menu className="h-5 w-5 sm:h-7 sm:w-7" aria-hidden="true" />
         </button>
       )}
