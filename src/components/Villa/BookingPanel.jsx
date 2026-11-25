@@ -52,7 +52,7 @@ const BookingPanel = ({ villa, user }) => {
   };
 
   return (
-    <section className="rounded-3xl bg-white p-5 shadow-soft dark:bg-surface-900">
+    <section id="booking-panel" className="scroll-mt-24 rounded-3xl bg-white p-5 shadow-soft dark:bg-surface-900">
       <h2 className="font-display text-2xl font-semibold tracking-tight">Reserve this villa</h2>
       <p className="mt-1 text-sm text-slate-500">Rs.{villa.dailyRent} / night · up to {villa.guests} guests{Number(villa.reviewCount) > 0 ? ` · ${Number(villa.rating).toFixed(1)} from ${villa.reviewCount} reviews` : ""}</p>
       <div className="mt-4 grid gap-3 sm:grid-cols-3">

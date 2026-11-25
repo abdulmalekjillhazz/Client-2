@@ -48,21 +48,23 @@ const VillaCard = ({ villa, compact = false, index = 0 }) => {
         ) : null}
 
         <div className="mt-auto grid grid-cols-2 gap-x-3 gap-y-3 pt-5 text-sm text-slate-600 dark:text-slate-300">
-          <div className="inline-flex items-center gap-2">
+          <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">
             <Users className="h-4 w-4" aria-hidden="true" />
-            <span>{villa.guests} Guests</span>
+            <span>{villa.guests} guests</span>
           </div>
-          <div className="inline-flex items-center gap-2">
+          <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">
             <BedDouble className="h-4 w-4" aria-hidden="true" />
-            <span>{villa.bedrooms} Bedrooms</span>
+            <span className="sm:hidden">{villa.bedrooms} beds</span>
+            <span className="hidden sm:inline">{villa.bedrooms} Bedrooms</span>
           </div>
-          <div className="inline-flex items-center gap-2">
+          <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">
             <Ruler className="h-4 w-4" aria-hidden="true" />
             <span>{villa.squareMeter} m2</span>
           </div>
-          <div className="inline-flex items-center gap-2">
+          <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">
             <Bath className="h-4 w-4" aria-hidden="true" />
-            <span>{villa.bathrooms} Bathrooms</span>
+            <span className="sm:hidden">{villa.bathrooms} baths</span>
+            <span className="hidden sm:inline">{villa.bathrooms} Bathrooms</span>
           </div>
         </div>
       </div>

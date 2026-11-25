@@ -1,5 +1,23 @@
 import React from "react";
-import AboutComponentMini from "../../subComponents/About";
+
+const steps = [
+  {
+    number: "01",
+    title: "Browse",
+    description: "Filter the current collection by destination or villa type.",
+  },
+  {
+    number: "02",
+    title: "Compare",
+    description: "Review nightly price, location, guest capacity, and property details.",
+  },
+  {
+    number: "03",
+    title: "Check dates",
+    description: "Choose your dates and guest count to check availability before booking.",
+  },
+];
+
 const AboutUs = () => {
   return (
     <section className="space-y-8" aria-labelledby="about-page-heading">
@@ -20,21 +38,37 @@ const AboutUs = () => {
         </div>
         <div className="space-y-4 text-shadow-soft">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-300">About RoyalCity</p>
-          <h1 id="about-page-heading" className="font-display text-[2.8rem] leading-none md:text-[3.7rem]">
-            Find a villa that fits your stay
+          <h1 id="about-page-heading" className="font-display text-[clamp(2.1rem,8vw,2.8rem)] leading-tight md:text-[3.7rem]">
+            A clearer way to choose a villa
           </h1>
           <p className="text-sm leading-7 text-slate-700 dark:text-slate-300">
-            Browse the current villa listings and compare the information available for each stay.
+            RoyalCity brings the current villa collection into one place.
           </p>
           <p className="text-sm leading-7 text-slate-700 dark:text-slate-300">
-            Each listing page shows its available photos, location, capacity, and booking date check.
+            Compare destination, guest capacity, nightly rates, and the details shown for each stay.
           </p>
           <p className="text-sm leading-7 text-slate-700 dark:text-slate-300">
-            Check the details and dates before you decide to book.
+            Open a listing to review its photo and details, then check dates before you book.
           </p>
         </div>
       </div>
-      <AboutComponentMini />
+      <section aria-labelledby="about-steps-heading" className="space-y-5 py-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-300">How it works</p>
+          <h2 id="about-steps-heading" className="mt-2 font-display text-[clamp(1.8rem,6vw,2.5rem)] leading-tight">
+            Plan your stay in three steps
+          </h2>
+        </div>
+        <ol className="grid gap-3 md:grid-cols-3">
+          {steps.map((step) => (
+            <li key={step.number} className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-soft dark:border-slate-700 dark:bg-surface-900/80">
+              <span className="text-xs font-bold tracking-[0.16em] text-brand-700 dark:text-brand-300">{step.number}</span>
+              <h3 className="mt-3 font-display text-2xl font-semibold">{step.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
     </section>
   );
 };

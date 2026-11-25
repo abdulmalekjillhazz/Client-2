@@ -7,7 +7,7 @@ import { useVillasData } from "../../hooks/useVillasData";
 import BookingPanel from "./BookingPanel";
 import Reviews from "./Reviews";
 import { EmptyState, ErrorState, LoadingCards } from "../Feedback/AsyncStates";
-import { ArrowLeft, Bath, BedDouble, ChevronLeft, ChevronRight, MapPin, Users, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Bath, BedDouble, ChevronLeft, ChevronRight, MapPin, Users, X } from "lucide-react";
 
 const SingleVilla = () => {
   const router = useRouter();
@@ -17,9 +17,28 @@ const SingleVilla = () => {
   const { user } = useAuth();
   const { villas, isLoading, error, retry } = useVillasData();
   const filteredVilla = villas.find((villa) => villa.id === numericId);
+  const villaId = filteredVilla?.id;
   const [activeImageIndex, setActiveImageIndex] = useState(null);
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState("");
+  const [showMobileBooking, setShowMobileBooking] = useState(false);
+
+  useEffect(() => {
+    setShowMobileBooking(false);
+    if (villaId == null) return undefined;
+    const bookingPanel = document.getElementById("booking-panel");
+    if (!bookingPanel) return undefined;
+    if (typeof IntersectionObserver === "undefined") {
+      setShowMobileBooking(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setShowMobileBooking(!entry.isIntersecting && entry.boundingClientRect.top > 0);
+    }, { threshold: 0.1 });
+    observer.observe(bookingPanel);
+    return () => observer.disconnect();
+  }, [villaId]);
 
   useEffect(() => {
     if (!user) {
@@ -203,22 +222,34 @@ const SingleVilla = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 dark:border-slate-700 dark:bg-surface-900 dark:text-slate-200 md:grid-cols-4">
-        <div className="inline-flex items-center gap-2">
+        <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">
           <BedDouble className="h-4 w-4" aria-hidden="true" />
-          {filteredVilla.bedrooms} Bedrooms
+          <span className="sm:hidden">{filteredVilla.bedrooms} beds</span>
+          <span className="hidden sm:inline">{filteredVilla.bedrooms} Bedrooms</span>
         </div>
-        <div className="inline-flex items-center gap-2">
+        <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">
           <Users className="h-4 w-4" aria-hidden="true" />
-          {filteredVilla.guests} Guests
+          {filteredVilla.guests} guests
         </div>
-        <div className="inline-flex items-center gap-2">
+        <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">
           <Bath className="h-4 w-4" aria-hidden="true" />
-          {filteredVilla.bathrooms} Bathrooms
+          <span className="sm:hidden">{filteredVilla.bathrooms} baths</span>
+          <span className="hidden sm:inline">{filteredVilla.bathrooms} Bathrooms</span>
         </div>
-        <div className="inline-flex items-center gap-2">{filteredVilla.squareMeter} m2 Area</div>
+        <div className="inline-flex min-w-0 items-center gap-2 text-xs sm:text-sm">{filteredVilla.squareMeter} m2</div>
       </div>
 
       <BookingPanel villa={filteredVilla} user={user} />
+      {showMobileBooking ? (
+        <a
+          href="#booking-panel"
+          className="mobile-booking-shortcut md:hidden"
+          aria-label={`Check dates for ${filteredVilla.name}, Rs.${filteredVilla.dailyRent} per night`}
+        >
+          <span>Rs.{filteredVilla.dailyRent} / night</span>
+          <span className="inline-flex items-center gap-2">Check dates <ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
+        </a>
+      ) : null}
       <Reviews villaId={filteredVilla.id} user={user} />
 
       <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-700">
