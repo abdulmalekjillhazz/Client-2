@@ -5,7 +5,7 @@ const VILLAS_URL = "/api/catalog/villas";
 const getDelay = () => {
   const raw = Number(process.env.NEXT_PUBLIC_VILLAS_DELAY_MS);
   if (!Number.isFinite(raw) || raw < 0) {
-    return 480;
+    return 0;
   }
   return raw;
 };
@@ -24,9 +24,10 @@ export const useVillasData = () => {
     setError("");
 
     try {
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, getDelay());
-      });
+      const delay = getDelay();
+      if (delay > 0) {
+        await new Promise((resolve) => window.setTimeout(resolve, delay));
+      }
 
       if (shouldForceError()) {
         throw new Error("Unable to fetch villa listings right now.");

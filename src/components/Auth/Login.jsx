@@ -110,23 +110,14 @@ const Login = () => {
   }
 
   return (
-    <section className="mx-auto grid max-w-4xl overflow-hidden rounded-card border border-slate-200 bg-white shadow-soft dark:border-slate-800 dark:bg-surface-900 md:grid-cols-[0.85fr_1.15fr]">
-      <aside className="bg-slate-900 p-6 text-slate-100 md:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-300">Account</p>
-        <h1 className="mt-3 font-display text-[2.6rem] leading-none">{returning ? "Welcome back" : "Sign in"}</h1>
-        <p className="mt-4 text-sm leading-6 text-slate-300">
-          {next === "/profile"
-            ? "Save villas, keep the messages you send, and manage your profile from one account."
-            : "Sign in to continue where you left off."}
-        </p>
-        <ul className="mt-6 space-y-2 text-sm text-slate-300">
-          <li>Saved villas stay on your profile</li>
-          <li>Contact messages are kept while you are signed in</li>
-          <li>You can become a host from your profile</li>
-        </ul>
-      </aside>
+    <section className="mx-auto max-w-[440px] rounded-2xl bg-white p-6 shadow-soft dark:bg-surface-900 sm:p-9">
+      <header className="mb-7 text-center">
+        <span className="mx-auto mb-4 block size-10 bg-[url(/favicon.svg)] bg-contain" aria-hidden="true" />
+        <h1 className="font-display text-3xl font-semibold">{returning ? "Welcome back" : "Sign in"}</h1>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Sign in to your RoyalCity account.</p>
+      </header>
 
-      <div className="p-6 md:p-8">
+      <div>
         <form className="space-y-4" onSubmit={onSubmit} noValidate>
           <div>
             <label htmlFor="email" className="text-sm font-semibold text-slate-800 dark:text-slate-100">Email</label>

@@ -22,6 +22,7 @@ const TopVillas = ({ villas, isLoading, error, onRetry }) => {
         </div>
         <Link
           to="/villas"
+          prefetch
           className="inline-flex h-11 items-center justify-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white shadow-[0_4px_14px_rgba(0,0,0,.16)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/15"
         >
           See all villas

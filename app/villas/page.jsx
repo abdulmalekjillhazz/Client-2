@@ -1,4 +1,7 @@
-"use client";
 import { Suspense } from "react";
 import Villas from "../../src/components/Villa/Villas";
-export default function Page() { return <Suspense fallback={null}><Villas /></Suspense>; }
+import VillasLoading from "../../src/components/Villa/VillasLoading";
+
+export default function Page() {
+  return <Suspense fallback={<VillasLoading />}><Villas /></Suspense>;
+}
