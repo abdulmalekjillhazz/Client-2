@@ -95,7 +95,7 @@ const Villas = () => {
     <section className="space-y-6" aria-labelledby="all-villas-heading">
       <header className="py-5 text-shadow-soft md:py-8">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-300">Villa directory</p>
-        <h1 id="all-villas-heading" className="mt-2 font-display text-[2.8rem] leading-none md:text-[3.7rem]">
+        <h1 id="all-villas-heading" className="mt-2 font-display text-[clamp(2.1rem,8vw,2.8rem)] leading-tight md:text-[3.7rem]">
           All Villas
         </h1>
         <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">

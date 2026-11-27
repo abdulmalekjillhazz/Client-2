@@ -36,7 +36,7 @@ const AppLayout = ({ children }) => {
           id="main-content"
           className={`relative z-10 min-h-[calc(100vh-24rem)] bg-transparent pb-16 ${
             isNotesRoute
-              ? "px-0 pt-28 md:pt-32"
+              ? "notes-main px-0 pt-28 md:pt-32"
               : pathname === "/"
                 ? "px-0 pt-0"
                 : "px-pagex pt-28 md:px-pagexl md:pt-32"

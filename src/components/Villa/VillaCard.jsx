@@ -13,9 +13,9 @@ const VillaCard = ({ villa, compact = false, index = 0 }) => {
       className="group relative flex h-full flex-col overflow-hidden rounded-[1.65rem] bg-white/90 text-slate-900 shadow-[0_8px_20px_rgba(25,36,30,.12)] backdrop-blur-md transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-[0_13px_26px_rgba(25,36,30,.18)] motion-safe:animate-rise dark:bg-[#091327]/85 dark:text-slate-100 dark:shadow-[0_8px_24px_rgba(210,225,255,.12)] dark:hover:shadow-[0_13px_30px_rgba(210,225,255,.2)]"
       aria-label={`Open ${villa.name} details`}
     >
-      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden">
+      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-slate-900/20">
         <Image
-          src={villa.image}
+          src={villa.image || "/villa6.jpg"}
           alt={villa.name}
           fill
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
@@ -23,7 +23,7 @@ const VillaCard = ({ villa, compact = false, index = 0 }) => {
           className="object-cover transition duration-700 ease-smooth group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
-        <span className="absolute bottom-4 right-4 rounded-full bg-[#073b2e]/90 px-4 py-2 text-xs font-semibold text-white opacity-0 shadow-[0_4px_12px_rgba(0,0,0,.2)] transition duration-300 ease-smooth group-hover:opacity-100">
+        <span className="absolute bottom-3.5 right-3.5 rounded-full bg-[#073b2e]/90 px-3.5 py-1.5 text-xs font-semibold text-white opacity-95 shadow-[0_4px_12px_rgba(0,0,0,.2)] transition duration-300 ease-smooth group-hover:bg-[#094e3d] group-hover:opacity-100">
           View stay <span aria-hidden="true">→</span>
         </span>
         <div className="absolute left-4 top-4 rounded-full bg-[#fffaf1]/95 px-3 py-1.5 text-xs font-bold text-slate-900 shadow-[0_3px_9px_rgba(0,0,0,.14)]">

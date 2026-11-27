@@ -10,7 +10,7 @@ const DEMO_PASSWORD = "VillaGuest1";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const inputClass =
-  "h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-300 aria-[invalid=true]:border-red-400 dark:border-slate-700 dark:bg-surface-900 dark:text-slate-100";
+  "h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-300 aria-[invalid=true]:border-red-400 dark:border-white/15 dark:bg-surface-950 dark:text-slate-100";
 
 const googleErrors = {
   google_not_configured: "Google sign-in needs GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the server environment.",
@@ -110,7 +110,7 @@ const Login = () => {
   }
 
   return (
-    <section className="mx-auto max-w-[440px] rounded-2xl bg-white p-6 shadow-soft dark:bg-surface-900 sm:p-9">
+    <section className="mx-auto max-w-[440px] rounded-2xl border border-slate-200/85 bg-white p-6 shadow-soft dark:border-white/15 dark:bg-surface-900 sm:p-9">
       <header className="mb-7 text-center">
         <span className="mx-auto mb-4 block size-10 bg-[url(/favicon.svg)] bg-contain" aria-hidden="true" />
         <h1 className="font-display text-3xl font-semibold">{returning ? "Welcome back" : "Sign in"}</h1>
@@ -164,7 +164,7 @@ const Login = () => {
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 inline-flex w-11 items-center justify-center text-slate-500"
+                className="absolute inset-y-0 right-0 inline-flex w-11 items-center justify-center text-slate-500 dark:text-slate-300"
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword((current) => !current)}
               >

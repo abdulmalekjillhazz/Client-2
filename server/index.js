@@ -4,7 +4,6 @@ const app = require("./app");
 const env = require("./config/env");
 const userModel = require("./models/user.model");
 
-userModel.getDemo();
 userModel
   .ensureDemoUser()
   .then(() => {

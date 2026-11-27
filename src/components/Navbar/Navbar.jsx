@@ -31,10 +31,18 @@ export default function Navbar() {
   const { user, ready, logout } = useAuth();
   const [dark, setDark] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("theme");
     if (saved) setDark(saved === "dark");
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   function toggleTheme() {
@@ -93,7 +101,7 @@ export default function Navbar() {
   }, [dark]);
 
   return (
-    <header className="royal-topbar">
+    <header className={`royal-topbar ${scrolled ? "royal-topbar--scrolled" : ""}`.trim()}>
       <Link to="/" className="royal-topbar__brand"><Crown aria-hidden="true" size={22} /> RoyalCity</Link>
       <nav className="royal-topbar__primary-nav" aria-label="Main navigation">
         {renderLinks()}

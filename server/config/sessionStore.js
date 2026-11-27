@@ -1,26 +1,54 @@
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const { Store } = require("express-session");
 
-const file = path.join(__dirname, "../data/sessions.json");
+function resolveBundledSessionFile() {
+  const candidates = [
+    path.join(__dirname, "../data/sessions.json"),
+    path.join(process.cwd(), "server/data/sessions.json"),
+    path.join(process.cwd(), "simple-demo/server/data/sessions.json"),
+  ];
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[1];
+}
+
+const bundledFile = resolveBundledSessionFile();
+const tmpFile = path.join(os.tmpdir(), "royalcity", "sessions.json");
 
 class FileSessionStore extends Store {
   constructor() {
     super();
+    this.activeFile = process.env.VERCEL ? tmpFile : bundledFile;
     this.sessions = this.read();
   }
 
   read() {
-    try {
-      return JSON.parse(fs.readFileSync(file, "utf8"));
-    } catch {
-      return {};
+    for (const candidate of [this.activeFile, bundledFile]) {
+      try {
+        return JSON.parse(fs.readFileSync(candidate, "utf8"));
+      } catch {
+        // Try next candidate
+      }
     }
+    return {};
   }
 
   write() {
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, JSON.stringify(this.sessions));
+    const payload = JSON.stringify(this.sessions);
+    try {
+      fs.mkdirSync(path.dirname(this.activeFile), { recursive: true });
+      fs.writeFileSync(this.activeFile, payload);
+    } catch (error) {
+      if (this.activeFile !== tmpFile && ["EROFS", "EACCES", "EPERM"].includes(error?.code)) {
+        this.activeFile = tmpFile;
+        try {
+          fs.mkdirSync(path.dirname(this.activeFile), { recursive: true });
+          fs.writeFileSync(this.activeFile, payload);
+        } catch {
+          // Keep in-memory sessions if filesystem is read-only.
+        }
+      }
+    }
   }
 
   get(sid, callback) {

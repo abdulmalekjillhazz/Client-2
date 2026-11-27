@@ -1,11 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: process.cwd(),
+  serverExternalPackages: [
+    "express",
+    "express-session",
+    "express-rate-limit",
+    "helmet",
+    "multer",
+    "cors",
+    "dotenv",
+    "express-validator",
+  ],
+  outputFileTracingIncludes: {
+    "/api/[[...slug]]": ["./server/**/*"],
+    "/uploads/[filename]": ["./server/uploads/**/*"],
+  },
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "plus.unsplash.com" },
-    ],
+    unoptimized: false,
   },
 };
 

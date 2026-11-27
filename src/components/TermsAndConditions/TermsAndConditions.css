@@ -1,14 +1,21 @@
-article{
+.terms-page{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-article header{
+.terms-page header{
     text-align: center;
 }
-article section{
-    padding: 0 100px;
+.terms-page{
+    width: 100%;
+    padding: 0 clamp(0px, 6vw, 100px);
 }
-article section p{
+.terms-page p{
     margin: 12px 0;
+}
+
+@media (max-width: 640px) {
+    .terms-page { padding-inline: 20px; }
+    .terms-page h1 { font-size: clamp(2rem, 9vw, 2.8rem); }
+    .terms-page h2 { font-size: clamp(1.45rem, 7vw, 2rem); }
 }

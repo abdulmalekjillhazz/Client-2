@@ -2,7 +2,7 @@ import React from "react";
 
 const TermsAndConditions = () => {
   return (
-    <section className="rounded-card border border-slate-200 bg-white p-5 shadow-soft dark:border-slate-800 dark:bg-surface-900 md:p-8">
+    <section className="terms-page rounded-card border border-slate-200 bg-white p-5 shadow-soft dark:border-slate-800 dark:bg-surface-900 md:p-8">
       <header className="border-b border-slate-200 pb-6 dark:border-slate-700">
         <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-300">
           Current as of September 2024
@@ -13,7 +13,7 @@ const TermsAndConditions = () => {
       </header>
       <div className="mt-6 space-y-4 text-sm leading-7 text-slate-700 dark:text-slate-300">
         <p className="leading-7">
-          Welcome to LUXURY RENTAL. Please read these terms and conditions
+          Welcome to RoyalCity. Please read these terms and conditions
           carefully before using our services.
         </p>
         <p className="leading-7">
@@ -38,7 +38,7 @@ const TermsAndConditions = () => {
             Use of the Website
             </h2>
             <ol className="mt-2 list-decimal space-y-1 pl-5">
-              <li> You must be at least [age] years old to use the Website.</li>
+              <li>You must be at least 18 years old to create an account or submit a booking request.</li>
               <li>
                 You agree to use the Website for lawful purposes and in
                 compliance with all applicable laws and regulations.
@@ -65,8 +65,8 @@ const TermsAndConditions = () => {
             <ol className="mt-2 list-decimal space-y-1 pl-5">
               <li>
                 The content on the Website, including but not limited to text,
-                graphics, logos, images, and software, is the property of [Your
-                Company] and is protected by copyright, trademark, and other
+                graphics, logos, images, and software, is the property of RoyalCity
+                and is protected by copyright, trademark, and other
                 intellectual property laws.
               </li>
               <li>
@@ -80,7 +80,7 @@ const TermsAndConditions = () => {
           <li>
             <h2 className="font-display text-[2rem] leading-none text-slate-900 dark:text-slate-100">Limitation of Liability</h2>
             <p>
-              To the fullest extent permitted by applicable law, [Your Company]
+              To the fullest extent permitted by applicable law, RoyalCity
               shall not be liable for any indirect, incidental, special,
               consequential, or punitive damages, or any loss of profits or
               revenues, whether incurred directly or indirectly, or any loss of
@@ -96,10 +96,9 @@ const TermsAndConditions = () => {
           <li>
             <h2 className="font-display text-[2rem] leading-none text-slate-900 dark:text-slate-100">Governing Law</h2>
             <p>
-              These Terms shall be governed by and construed in accordance with
-              the laws of Jurisdiction. Contact Information If you have any
-              questions about these Terms, please contact us at{" "}
-              <span>propertyrental@gmail.com</span>.
+              These Terms are governed by applicable local laws where RoyalCity
+              operates. If you have any questions about these Terms, please reach
+              out through our Contact page.
             </p>
           </li>
         </ul>

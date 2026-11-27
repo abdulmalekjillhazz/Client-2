@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Upload } from "lucide-react";
 import { Link } from "../NextLink";
 import { api } from "../../context/api";
 import { useAuth } from "../../context/AuthContext";
@@ -21,10 +23,21 @@ const emptyForm = {
 };
 
 const inputClass =
-  "h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-300 dark:border-slate-700 dark:bg-surface-900 dark:text-slate-100";
+  "h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-300 dark:border-white/15 dark:bg-surface-950 dark:text-slate-100";
+
+function Field({ id, label, children, className = "" }) {
+  return (
+    <div className={className}>
+      <label htmlFor={id} className="mb-1 block text-xs font-semibold uppercase tracking-[0.08em] text-slate-600 dark:text-slate-300">
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
 
 const ManageVillas = () => {
-  const { push: navigate } = useRouter();
+  const router = useRouter();
   const { user, ready, becomeHost } = useAuth();
   const [villas, setVillas] = useState([]);
   const [form, setForm] = useState(emptyForm);
@@ -37,8 +50,8 @@ const ManageVillas = () => {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (ready && !user) navigate("/login", { replace: true, state: { from: "/manage" } });
-  }, [ready, user, navigate]);
+    if (ready && !user) router.replace("/login?next=%2Fmanage");
+  }, [ready, user, router]);
 
   const load = async (nextQuery = query, nextSort = sort) => {
     const params = new URLSearchParams();
@@ -159,14 +172,22 @@ const ManageVillas = () => {
   }
 
   return (
-    <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-      <form className="space-y-3 rounded-card border border-slate-200 bg-white p-5 shadow-soft dark:border-slate-800 dark:bg-surface-900" onSubmit={onSubmit}>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-300">Host tools</p>
-        <h1 className="font-display text-[2.4rem] leading-none">{editingId ? "Edit villa" : "Add a villa"}</h1>
-        <input className={inputClass} required placeholder="Name" value={form.name} onChange={update("name")} />
-        <div className="grid grid-cols-2 gap-3">
-          <input className={inputClass} required placeholder="Location" list="villa-locations" value={form.location} onChange={update("location")} />
-          <input className={inputClass} required placeholder="Category" list="villa-categories" value={form.category} onChange={update("category")} />
+    <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+      <form className="space-y-4 rounded-card border border-slate-200 bg-white p-5 shadow-soft dark:border-white/15 dark:bg-surface-900" onSubmit={onSubmit}>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8a5d19] dark:text-[#f0c76e]">Host tools</p>
+          <h1 className="mt-1 font-display text-[2.4rem] leading-none text-slate-900 dark:text-white">{editingId ? "Edit villa" : "Add a villa"}</h1>
+        </div>
+        <Field id="mv-name" label="Villa name">
+          <input id="mv-name" className={inputClass} required placeholder="Villa Lumina" value={form.name} onChange={update("name")} />
+        </Field>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <Field id="mv-location" label="Location">
+            <input id="mv-location" className={inputClass} required placeholder="Greece" list="villa-locations" value={form.location} onChange={update("location")} />
+          </Field>
+          <Field id="mv-category" label="Category">
+            <input id="mv-category" className={inputClass} required placeholder="Mountains" list="villa-categories" value={form.category} onChange={update("category")} />
+          </Field>
         </div>
         <datalist id="villa-locations">
           <option value="Greece" />
@@ -176,60 +197,96 @@ const ManageVillas = () => {
           <option value="Mountains" />
           <option value="Seaside" />
         </datalist>
-        <div className="grid grid-cols-3 gap-3">
-          <input className={inputClass} required type="number" min="1" placeholder="Guests" value={form.guests} onChange={update("guests")} />
-          <input className={inputClass} required type="number" min="1" placeholder="Bedrooms" value={form.bedrooms} onChange={update("bedrooms")} />
-          <input className={inputClass} required type="number" min="1" placeholder="Bathrooms" value={form.bathrooms} onChange={update("bathrooms")} />
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <Field id="mv-guests" label="Guests">
+            <input id="mv-guests" className={inputClass} required type="number" min="1" value={form.guests} onChange={update("guests")} />
+          </Field>
+          <Field id="mv-bedrooms" label="Bedrooms">
+            <input id="mv-bedrooms" className={inputClass} required type="number" min="1" value={form.bedrooms} onChange={update("bedrooms")} />
+          </Field>
+          <Field id="mv-bathrooms" label="Bathrooms">
+            <input id="mv-bathrooms" className={inputClass} required type="number" min="1" value={form.bathrooms} onChange={update("bathrooms")} />
+          </Field>
         </div>
-        <div className="grid grid-cols-3 gap-3">
-          <input className={inputClass} required placeholder="Square meters" value={form.squareMeter} onChange={update("squareMeter")} />
-          <input className={inputClass} required placeholder="Rating" value={form.rating} onChange={update("rating")} />
-          <input className={inputClass} required placeholder="Daily rent" value={form.dailyRent} onChange={update("dailyRent")} />
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <Field id="mv-area" label="Area (sq m)">
+            <input id="mv-area" className={inputClass} required value={form.squareMeter} onChange={update("squareMeter")} />
+          </Field>
+          <Field id="mv-rating" label="Rating">
+            <input id="mv-rating" className={inputClass} required value={form.rating} onChange={update("rating")} />
+          </Field>
+          <Field id="mv-rent" label="Daily rent (Rs.)">
+            <input id="mv-rent" className={inputClass} required value={form.dailyRent} onChange={update("dailyRent")} />
+          </Field>
         </div>
-        <input className={inputClass} required placeholder="Image URL" value={form.image} onChange={update("image")} />
-        <input
-          className="text-sm"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          aria-label="Upload villa image"
-          onChange={async (event) => {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            const body = new FormData();
-            body.append("image", file);
-            setError("");
-            try {
-              const result = await api("/api/uploads", { method: "POST", body });
-              setForm((current) => ({ ...current, image: result.url }));
-              setNotice("Image uploaded.");
-            } catch (requestError) {
-              setError(requestError.message);
-            }
-          }}
-        />
-        <textarea className={`${inputClass} h-24 py-2.5`} placeholder="Description" value={form.description} onChange={update("description")} />
-        <select className={inputClass} value={form.status} onChange={update("status")}>
-          <option value="published">Published</option>
-          <option value="draft">Draft</option>
-        </select>
+        <Field id="mv-image" label="Image URL">
+          <input id="mv-image" className={inputClass} required placeholder="/villa1.jpg or uploaded path" value={form.image} onChange={update("image")} />
+        </Field>
+        <div className="flex flex-wrap items-center gap-4 rounded-xl border border-dashed border-slate-300 bg-surface-50 p-3 dark:border-white/20 dark:bg-surface-950/70">
+          {form.image ? (
+            <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-lg border border-slate-200 dark:border-white/15">
+              <Image src={form.image} alt={form.name || "Villa preview"} fill sizes="128px" unoptimized={!form.image.startsWith("/") || form.image.startsWith("/uploads/")} className="object-cover" />
+            </div>
+          ) : null}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <label
+              htmlFor="mv-upload"
+              className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 dark:border-white/20 dark:bg-surface-900 dark:text-slate-100 dark:hover:bg-white/10"
+            >
+              <Upload className="h-4 w-4" aria-hidden="true" />
+              Upload photo
+            </label>
+            <input
+              id="mv-upload"
+              className="sr-only"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              aria-label="Upload villa image"
+              onChange={async (event) => {
+                const file = event.target.files?.[0];
+                if (!file) return;
+                const body = new FormData();
+                body.append("image", file);
+                setError("");
+                try {
+                  const result = await api("/api/uploads", { method: "POST", body });
+                  setForm((current) => ({ ...current, image: result.url }));
+                  setNotice("Image uploaded.");
+                } catch (requestError) {
+                  setError(requestError.message);
+                }
+              }}
+            />
+            <span className="text-xs text-slate-500 dark:text-slate-400">JPG, PNG, or WebP up to 5 MB</span>
+          </div>
+        </div>
+        <Field id="mv-description" label="Description">
+          <textarea id="mv-description" className={`${inputClass} h-24 py-2.5`} placeholder="Describe views, pool access, and nearby beaches" value={form.description} onChange={update("description")} />
+        </Field>
+        <Field id="mv-status" label="Listing status">
+          <select id="mv-status" className={inputClass} value={form.status} onChange={update("status")}>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+          </select>
+        </Field>
         {error ? <p className="text-sm text-red-600 dark:text-red-300">{error}</p> : null}
         {notice ? <p className="text-sm text-emerald-700 dark:text-emerald-300">{notice}</p> : null}
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button type="submit" disabled={saving} className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white disabled:opacity-70 dark:bg-slate-100 dark:text-slate-900">
             {saving ? "Saving…" : editingId ? "Save changes" : "Add villa"}
           </button>
           {editingId ? (
-            <button type="button" onClick={resetForm} className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-300 px-5 text-sm font-semibold dark:border-slate-700">
+            <button type="button" onClick={resetForm} className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-300 px-5 text-sm font-semibold text-slate-800 dark:border-white/20 dark:text-slate-100">
               Cancel
             </button>
           ) : null}
         </div>
       </form>
 
-      <div className="rounded-card border border-slate-200 bg-white p-5 shadow-soft dark:border-slate-800 dark:bg-surface-900">
+      <div className="rounded-card border border-slate-200 bg-white p-5 shadow-soft dark:border-white/15 dark:bg-surface-900">
         <div className="flex flex-wrap items-center gap-2">
-          <input className={`${inputClass} min-w-[12rem] flex-1`} placeholder="Search listings" value={query} onChange={(event) => setQuery(event.target.value)} />
-          <select className={`${inputClass} w-auto`} value={sort} onChange={(event) => setSort(event.target.value)}>
+          <input className={`${inputClass} min-w-0 flex-1`} aria-label="Search listings" placeholder="Search listings" value={query} onChange={(event) => setQuery(event.target.value)} />
+          <select className={`${inputClass} w-auto`} aria-label="Sort listings" value={sort} onChange={(event) => setSort(event.target.value)}>
             <option value="">Catalog order</option>
             <option value="name">Name</option>
             <option value="rating">Rating</option>
@@ -239,19 +296,28 @@ const ManageVillas = () => {
         </div>
         <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{loading ? "Loading listings…" : `${villas.length} listings, including drafts`}</p>
         <ul className="mt-4 space-y-3">
-          {villas.map((villa) => (
-            <li key={villa.id} className="flex flex-wrap items-center justify-between gap-3 border border-slate-200 p-3 dark:border-slate-700">
-              <div>
-                <p className="font-semibold">{villa.name}</p>
-                <p className="text-sm text-slate-500">{villa.location} · {villa.category} · {villa.status}</p>
-              </div>
-              <div className="flex gap-2">
-                <Link to={`/villa/${villa.id}`} className="inline-flex h-9 items-center px-3 text-sm font-semibold text-slate-700 dark:text-slate-200">View</Link>
-                <button type="button" onClick={() => editVilla(villa)} className="inline-flex h-9 items-center border border-slate-300 px-3 text-sm font-semibold dark:border-slate-700">Edit</button>
-                <button type="button" onClick={() => removeVilla(villa)} className="inline-flex h-9 items-center px-3 text-sm font-semibold text-red-700 dark:text-red-300">Remove</button>
-              </div>
-            </li>
-          ))}
+          {villas.map((villa) => {
+            const thumbSrc = villa.image || "/villa1.jpg";
+            const useUnoptimized = !thumbSrc.startsWith("/") || thumbSrc.startsWith("/uploads/");
+            return (
+              <li key={villa.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 p-3 dark:border-white/15">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="relative h-12 w-20 shrink-0 overflow-hidden rounded-lg bg-slate-100 dark:bg-surface-950">
+                    <Image src={thumbSrc} alt={villa.name} fill sizes="80px" unoptimized={useUnoptimized} className="object-cover" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold text-slate-900 dark:text-white">{villa.name}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-300">{villa.location} · {villa.category} · {villa.status}</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Link to={`/villa/${villa.id}`} className="inline-flex h-9 items-center px-3 text-sm font-semibold text-slate-700 dark:text-slate-200">View</Link>
+                  <button type="button" onClick={() => editVilla(villa)} className="inline-flex h-9 items-center rounded-lg border border-slate-300 px-3 text-sm font-semibold text-slate-800 dark:border-white/20 dark:text-slate-100">Edit</button>
+                  <button type="button" onClick={() => removeVilla(villa)} className="inline-flex h-9 items-center px-3 text-sm font-semibold text-red-700 dark:text-red-300">Remove</button>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="lg:col-span-2">

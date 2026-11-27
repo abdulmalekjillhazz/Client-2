@@ -19,9 +19,7 @@ const Home = () => {
       <PageContainer className="space-y-12 px-5 py-16 md:space-y-16 md:px-10 md:py-20">
         <div id="featured-villas" className="scroll-mt-28"><TopVillas villas={villas} isLoading={isLoading} error={error} onRetry={retry} /></div>
         <Regions villas={villas} isLoading={isLoading} />
-      </PageContainer>
-      <div className="px-5 pb-14 md:px-10"><Host /></div>
-      <PageContainer className="space-y-12 px-5 pb-12 md:space-y-16 md:px-10 md:pb-16">
+        <Host />
         <About />
         <Contact />
       </PageContainer>

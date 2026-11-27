@@ -1,9 +1,35 @@
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const crypto = require("crypto");
 const multer = require("multer");
 
-const uploadDir = path.join(__dirname, "../uploads");
+function resolveBundledUploadDir() {
+  const candidates = [
+    path.join(__dirname, "../uploads"),
+    path.join(process.cwd(), "server/uploads"),
+  ];
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[1];
+}
+
+const bundledUploadDir = resolveBundledUploadDir();
+const tmpUploadDir = path.join(os.tmpdir(), "royalcity", "uploads");
+let activeUploadDir = process.env.VERCEL ? tmpUploadDir : bundledUploadDir;
+
+function getUploadDir() {
+  try {
+    fs.mkdirSync(activeUploadDir, { recursive: true });
+    return activeUploadDir;
+  } catch (error) {
+    if (activeUploadDir !== tmpUploadDir && ["EROFS", "EACCES", "EPERM"].includes(error?.code)) {
+      activeUploadDir = tmpUploadDir;
+      fs.mkdirSync(activeUploadDir, { recursive: true });
+      return activeUploadDir;
+    }
+    throw error;
+  }
+}
+
 const extensions = {
   "image/jpeg": ".jpg",
   "image/png": ".png",
@@ -12,8 +38,11 @@ const extensions = {
 
 const storage = multer.diskStorage({
   destination(req, file, callback) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-    callback(null, uploadDir);
+    try {
+      callback(null, getUploadDir());
+    } catch (error) {
+      callback(error);
+    }
   },
   filename(req, file, callback) {
     callback(null, `${crypto.randomBytes(16).toString("hex")}${extensions[file.mimetype]}`);
@@ -46,4 +75,4 @@ function uploadImage(req, res, next) {
   });
 }
 
-module.exports = { uploadImage };
+module.exports = { uploadImage, getUploadDir, bundledUploadDir, tmpUploadDir };
